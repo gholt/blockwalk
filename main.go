@@ -27,6 +27,18 @@ func main() {
 		sort.Sort(fileSizes)
 		fileSizesMedian = fileSizes[len(fileSizes)/2]
 	}
+	report := [][]string{
+		{fmt.Sprintf("%d", dirCount), "directories"},
+		{fmt.Sprintf("%d", len(fileSizes)), "files"},
+		{fmt.Sprintf("%d", otherCount), "items not files nor directories"},
+		{fmt.Sprintf("%d", fileSizesTotal), "total file bytes"},
+		{fmt.Sprintf("%d", fileSizesMean), "mean file size"},
+		{fmt.Sprintf("%d", fileSizesMedian), "median file size"},
+	}
+	alignOptions := brimtext.NewDefaultAlignOptions()
+	alignOptions.Alignments = []brimtext.Alignment{brimtext.Right, brimtext.Left}
+	fmt.Println(brimtext.Align(report, alignOptions))
+
 	var blockSizesMean int64
 	var blockSizesMedian int64
 	var blockSizesCount int64
@@ -78,21 +90,13 @@ func main() {
 		}
 		blockSizesTarget = blockSizesTargetNew
 	}
-	report := [][]string{
-		{fmt.Sprintf("%d", dirCount), "directories"},
-		{fmt.Sprintf("%d", len(fileSizes)), "files"},
-		{fmt.Sprintf("%d", otherCount), "items not files nor directories"},
-		{fmt.Sprintf("%d", fileSizesTotal), "total file bytes"},
-		{fmt.Sprintf("%d", fileSizesMean), "mean file size"},
-		{fmt.Sprintf("%d", fileSizesMedian), "median file size"},
+	report = [][]string{
 		{fmt.Sprintf("%d", blockSizesMean), "mean block size"},
 		{fmt.Sprintf("%d", blockSizesMedian), "median block size"},
 		{fmt.Sprintf("%d", blockSizesCount), "block count"},
 		{fmt.Sprintf("%d", blockSizesFull), fmt.Sprintf("full block count, %.0f%%", 100*float64(blockSizesFull)/float64(blockSizesCount))},
 		{fmt.Sprintf("%d", blockSizesTarget), "\"best\" block size, median~=mean"},
 	}
-	alignOptions := brimtext.NewDefaultAlignOptions()
-	alignOptions.Alignments = []brimtext.Alignment{brimtext.Right, brimtext.Left}
 	fmt.Println(brimtext.Align(report, alignOptions))
 
 	blockSizesTarget = math.MaxInt64
@@ -149,20 +153,12 @@ func main() {
 		blockSizesTarget = blockSizesTargetNew
 	}
 	report = [][]string{
-		{fmt.Sprintf("%d", dirCount), "directories"},
-		{fmt.Sprintf("%d", len(fileSizes)), "files"},
-		{fmt.Sprintf("%d", otherCount), "items not files nor directories"},
-		{fmt.Sprintf("%d", fileSizesTotal), "total file bytes"},
-		{fmt.Sprintf("%d", fileSizesMean), "mean file size"},
-		{fmt.Sprintf("%d", fileSizesMedian), "median file size"},
 		{fmt.Sprintf("%d", blockSizesMean), "mean block size"},
 		{fmt.Sprintf("%d", blockSizesMedian), "median block size"},
 		{fmt.Sprintf("%d", blockSizesCount), "block count"},
 		{fmt.Sprintf("%d", blockSizesFull), fmt.Sprintf("full block count, %.0f%%", 100*float64(blockSizesFull)/float64(blockSizesCount))},
 		{fmt.Sprintf("%d", blockSizesTarget), "\"best\" block size, full~=50%"},
 	}
-	alignOptions = brimtext.NewDefaultAlignOptions()
-	alignOptions.Alignments = []brimtext.Alignment{brimtext.Right, brimtext.Left}
 	fmt.Println(brimtext.Align(report, alignOptions))
 }
 
