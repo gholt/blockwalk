@@ -8,7 +8,7 @@ import (
 	"path"
 	"sort"
 
-	"gopkg.in/gholt/brimtext.v1"
+	"github.com/gholt/brimtext"
 )
 
 func main() {
